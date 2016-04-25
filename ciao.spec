@@ -65,7 +65,7 @@ export GOROOT="/usr/lib/golang"
 export GOPATH="%{buildroot}/usr/lib/golang:$(pwd)"
 mkdir -p src/github.com/01org
 ln -s ../../../ src/github.com/01org/ciao
-for dir in ciao-cli ciao-controller ciao-launcher ciao-scheduler ciao-vendor payloads ssntp; 
+for dir in ciao-cli ciao-controller ciao-launcher ciao-scheduler payloads ssntp;
 do
     pushd $dir
     go build -v -x
@@ -79,7 +79,6 @@ install -D ./ciao-cli/ciao-cli               %{buildroot}%{_bindir}
 install -D ./ciao-controller/ciao-controller %{buildroot}%{_bindir}
 install -D ./ciao-launcher/ciao-launcher     %{buildroot}%{_bindir}
 install -D ./ciao-scheduler/ciao-scheduler   %{buildroot}%{_bindir}
-install -D ./ciao-vendor/ciao-vendor         %{buildroot}%{_bindir}
 install -D ./networking/cnci_agent/scripts/cnci-agent.service %{buildroot}%{_prefix}/lib/systemd/system/
 
 
@@ -99,7 +98,6 @@ go test -v ./... ||:
 %{_bindir}/ciao-controller
 %{_bindir}/ciao-launcher
 %{_bindir}/ciao-scheduler
-%{_bindir}/ciao-vendor
 
 %files config
 %{_prefix}/lib/systemd/system/cnci-agent.service
