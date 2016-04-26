@@ -50,12 +50,15 @@ Requires: %{name}-config
 %description bin
 bin components for the ciao package.
 
-%package config
-Summary: config components for the ciao package.
+%package cnci-agent
+Summary: Compute Node Concentrators
 Group: Default
 
-%description config
-config components for the ciao package.
+%description cnci-agent
+The CNCI Agent is the service running within a CNCI VM
+that communicates with the ciao-scheduler to create new
+bridges and tunnels in response to remote bridge and
+tunnel creation on a compute node.
 
 %prep
 %setup -q
@@ -65,7 +68,7 @@ export GOROOT="/usr/lib/golang"
 export GOPATH="%{buildroot}/usr/lib/golang:$(pwd)"
 mkdir -p src/github.com/01org
 ln -s ../../../ src/github.com/01org/ciao
-for dir in ciao-cli ciao-controller ciao-launcher ciao-scheduler payloads ssntp;
+for dir in ciao-cli ciao-controller ciao-launcher ciao-scheduler networking/cnci_agent payloads ssntp;
 do
     pushd $dir
     go build -v -x
@@ -79,6 +82,7 @@ install -D ./ciao-cli/ciao-cli               %{buildroot}%{_bindir}
 install -D ./ciao-controller/ciao-controller %{buildroot}%{_bindir}
 install -D ./ciao-launcher/ciao-launcher     %{buildroot}%{_bindir}
 install -D ./ciao-scheduler/ciao-scheduler   %{buildroot}%{_bindir}
+install -D ./networking/cnci_agent/cnci_agent %{buildroot}%{_bindir}
 install -D ./networking/cnci_agent/scripts/cnci-agent.service %{buildroot}%{_prefix}/lib/systemd/system/
 
 
@@ -99,5 +103,6 @@ go test -v ./... ||:
 %{_bindir}/ciao-launcher
 %{_bindir}/ciao-scheduler
 
-%files config
+%files cnci-agent
+%{_bindir}/cnci_agent
 %{_prefix}/lib/systemd/system/cnci-agent.service
