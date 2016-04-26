@@ -8,7 +8,6 @@ Group    : Development/Tools
 License  : Apache-2.0
 
 Requires : %{name}-bin
-Requires : %{name}-config
 
 BuildRequires : go
 BuildRequires : golang-github-Sirupsen-logrus
@@ -45,7 +44,6 @@ over the "Simple and Secure Node Transfer Protocol (SSNTP)".
 %package bin
 Summary: bin components for the ciao package.
 Group: Binaries
-Requires: %{name}-config
 
 %description bin
 bin components for the ciao package.
