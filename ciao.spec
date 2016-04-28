@@ -3,11 +3,13 @@ Version  : ea6a2d4c4d419e6d9d0e8e228abc2b16ad29196e
 Release  : 4
 URL      : https://github.com/01org/ciao
 Source0  : https://github.com/01org/ciao/archive/ea6a2d4c4d419e6d9d0e8e228abc2b16ad29196e.tar.gz
+Source1  : ciao.tmpfiles
 Summary  : Cloud Integrated Advanced Orchestrator
 Group    : Development/Tools
 License  : Apache-2.0
 
 Requires : %{name}-bin
+Requires : %{name}-config
 
 BuildRequires : go
 BuildRequires : golang-github-Sirupsen-logrus
@@ -48,6 +50,13 @@ Group: Binaries
 %description bin
 bin components for the ciao package.
 
+%package config
+Summary: config components for the ciao package.
+Group: Default
+
+%description config
+config components for the ciao package.
+
 %package cnci-agent
 Summary: Compute Node Concentrators
 Group: Default
@@ -76,6 +85,8 @@ done
 %install
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_prefix}/lib/systemd/system/
+mkdir -p %{buildroot}%{_prefix}/lib/tmpfiles.d
+install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/ciao.conf
 install -D ./ciao-cli/ciao-cli               %{buildroot}%{_bindir}
 install -D ./ciao-controller/ciao-controller %{buildroot}%{_bindir}
 install -D ./ciao-launcher/ciao-launcher     %{buildroot}%{_bindir}
@@ -102,6 +113,9 @@ go test -v ./... ||:
 %{_bindir}/ciao-controller
 %{_bindir}/ciao-launcher
 %{_bindir}/ciao-scheduler
+
+%files config
+%{_prefix}/lib/tmpfiles.d/ciao.conf
 
 %files cnci-agent
 %{_bindir}/cnci_agent
