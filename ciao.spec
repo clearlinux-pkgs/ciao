@@ -1,8 +1,8 @@
 Name     : ciao
-Version  : ea6a2d4c4d419e6d9d0e8e228abc2b16ad29196e
-Release  : 6
+Version  : 9146f591ca71dc4f04ba5a2b3b7cbe214a87d2e1
+Release  : 7
 URL      : https://github.com/01org/ciao
-Source0  : https://github.com/01org/ciao/archive/ea6a2d4c4d419e6d9d0e8e228abc2b16ad29196e.tar.gz
+Source0  : https://github.com/01org/ciao/archive/9146f591ca71dc4f04ba5a2b3b7cbe214a87d2e1.tar.gz
 Source1  : ciao.tmpfiles
 Summary  : Cloud Integrated Advanced Orchestrator
 Group    : Development/Tools
