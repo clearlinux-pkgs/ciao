@@ -1,6 +1,6 @@
 Name     : ciao
 Version  : 9146f591ca71dc4f04ba5a2b3b7cbe214a87d2e1
-Release  : 7
+Release  : 8
 URL      : https://github.com/01org/ciao
 Source0  : https://github.com/01org/ciao/archive/9146f591ca71dc4f04ba5a2b3b7cbe214a87d2e1.tar.gz
 Source1  : ciao.tmpfiles
@@ -8,31 +8,10 @@ Summary  : Cloud Integrated Advanced Orchestrator
 Group    : Development/Tools
 License  : Apache-2.0
 
-Requires : %{name}-bin
-Requires : %{name}-config
+Requires : ciao-bin
+Requires : ciao-config
 
 BuildRequires : go
-BuildRequires : golang-github-Sirupsen-logrus
-BuildRequires : golang-github-boltdb-bolt
-BuildRequires : golang-github-coreos-go-iptables
-BuildRequires : golang-github-davecgh-go-spew
-BuildRequires : golang-github-docker-distribution
-BuildRequires : golang-github-docker-docker
-BuildRequires : golang-github-docker-engine-api
-BuildRequires : golang-github-docker-go-connections
-BuildRequires : golang-github-docker-go-units
-BuildRequires : golang-github-docker-libnetwork
-BuildRequires : golang-github-go-yaml-yaml
-BuildRequires : golang-github-golang-glog
-BuildRequires : golang-github-gorilla-context
-BuildRequires : golang-github-gorilla-mux
-BuildRequires : golang-github-mattn-go-sqlite3
-BuildRequires : golang-github-mitchellh-mapstructure
-BuildRequires : golang-github-opencontainers-runc
-BuildRequires : golang-github-rackspace-gophercloud
-BuildRequires : golang-github-tylerb-graceful
-BuildRequires : golang-github-vishvananda-netlink
-BuildRequires : golang-googlecode-go-net
 
 %description
 Ciao is the "Cloud Integrated Advanced Orchestrator".
@@ -73,6 +52,7 @@ tunnel creation on a compute node.
 %build
 export GOROOT="/usr/lib/golang"
 export GOPATH="%{buildroot}/usr/lib/golang:$(pwd)"
+mv vendor src
 mkdir -p src/github.com/01org
 ln -s ../../../ src/github.com/01org/ciao
 for dir in ciao-cli ciao-controller ciao-launcher ciao-scheduler networking/cnci_agent payloads ssntp/ciao-cert;
@@ -102,21 +82,26 @@ export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost
 export GOROOT="/usr/lib/golang"
 export GOPATH="%{buildroot}/usr/lib/golang:$(pwd)"
-go test -v ./... ||:
+for dir in ciao-cli ciao-controller ciao-launcher ciao-scheduler networking/cnci_agent payloads ssntp/ciao-cert;
+do
+    pushd $dir
+    go test ./ || :
+    popd
+done
 
 %files
 %defattr(-,root,root,-)
 
 %files bin
-%{_bindir}/ciao-cli
-%{_bindir}/ciao-cert
-%{_bindir}/ciao-controller
-%{_bindir}/ciao-launcher
-%{_bindir}/ciao-scheduler
+/usr/bin/ciao-cli
+/usr/bin/ciao-cert
+/usr/bin/ciao-controller
+/usr/bin/ciao-launcher
+/usr/bin/ciao-scheduler
 
 %files config
-%{_prefix}/lib/tmpfiles.d/ciao.conf
+/usr/lib/tmpfiles.d/ciao.conf
 
 %files cnci-agent
-%{_bindir}/cnci_agent
-%{_prefix}/lib/systemd/system/cnci-agent.service
+/usr/bin/cnci_agent
+/usr/lib/systemd/system/cnci-agent.service
