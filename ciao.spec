@@ -1,8 +1,8 @@
 Name     : ciao
-Version  : 9146f591ca71dc4f04ba5a2b3b7cbe214a87d2e1
-Release  : 8
+Version  : 5f40deb74b895be01c7d6e4daa0f12f0850ac82e
+Release  : 9
 URL      : https://github.com/01org/ciao
-Source0  : https://github.com/01org/ciao/archive/9146f591ca71dc4f04ba5a2b3b7cbe214a87d2e1.tar.gz
+Source0  : https://github.com/01org/ciao/archive/5f40deb74b895be01c7d6e4daa0f12f0850ac82e.tar.gz
 Source1  : ciao.tmpfiles
 Summary  : Cloud Integrated Advanced Orchestrator
 Group    : Development/Tools
@@ -55,7 +55,7 @@ export GOPATH="%{buildroot}/usr/lib/golang:$(pwd)"
 mv vendor src
 mkdir -p src/github.com/01org
 ln -s ../../../ src/github.com/01org/ciao
-for dir in ciao-cli ciao-controller ciao-launcher ciao-scheduler networking/cnci_agent payloads ssntp/ciao-cert;
+for dir in ciao-cli ciao-controller ciao-launcher ciao-scheduler networking/ciao-cnci-agent payloads ciao-cert;
 do
     pushd $dir
     go build -v -x
@@ -71,9 +71,9 @@ install -D ./ciao-cli/ciao-cli               %{buildroot}%{_bindir}
 install -D ./ciao-controller/ciao-controller %{buildroot}%{_bindir}
 install -D ./ciao-launcher/ciao-launcher     %{buildroot}%{_bindir}
 install -D ./ciao-scheduler/ciao-scheduler   %{buildroot}%{_bindir}
-install -D ./networking/cnci_agent/cnci_agent %{buildroot}%{_bindir}
-install -D ./ssntp/ciao-cert/ciao-cert %{buildroot}%{_bindir}
-install -D ./networking/cnci_agent/scripts/cnci-agent.service %{buildroot}%{_prefix}/lib/systemd/system/
+install -D ./networking/ciao-cnci-agent/ciao-cnci-agent %{buildroot}%{_bindir}
+install -D ./ciao-cert/ciao-cert %{buildroot}%{_bindir}
+install -D ./networking/ciao-cnci-agent/scripts/ciao-cnci-agent.service %{buildroot}%{_prefix}/lib/systemd/system/
 
 
 %check
@@ -82,7 +82,7 @@ export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost
 export GOROOT="/usr/lib/golang"
 export GOPATH="%{buildroot}/usr/lib/golang:$(pwd)"
-for dir in ciao-cli ciao-controller ciao-launcher ciao-scheduler networking/cnci_agent payloads ssntp/ciao-cert;
+for dir in ciao-cli ciao-controller ciao-launcher ciao-scheduler networking/ciao-cnci-agent payloads ciao-cert;
 do
     pushd $dir
     go test ./ || :
@@ -103,5 +103,5 @@ done
 /usr/lib/tmpfiles.d/ciao.conf
 
 %files cnci-agent
-/usr/bin/cnci_agent
-/usr/lib/systemd/system/cnci-agent.service
+/usr/bin/ciao-cnci-agent
+/usr/lib/systemd/system/ciao-cnci-agent.service
