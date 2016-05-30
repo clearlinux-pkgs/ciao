@@ -1,6 +1,6 @@
 Name     : ciao
 Version  : 5f40deb74b895be01c7d6e4daa0f12f0850ac82e
-Release  : 9
+Release  : 10
 URL      : https://github.com/01org/ciao
 Source0  : https://github.com/01org/ciao/archive/5f40deb74b895be01c7d6e4daa0f12f0850ac82e.tar.gz
 Source1  : ciao.tmpfiles
