@@ -1,9 +1,8 @@
 Name     : ciao
-Version  : 5f40deb74b895be01c7d6e4daa0f12f0850ac82e
-Release  : 10
+Version  : da30088e7178cdba294feec8bcd815e8111704c1
+Release  : 11
 URL      : https://github.com/01org/ciao
-Source0  : https://github.com/01org/ciao/archive/5f40deb74b895be01c7d6e4daa0f12f0850ac82e.tar.gz
-Source1  : ciao.tmpfiles
+Source0  : https://github.com/01org/ciao/archive/da30088e7178cdba294feec8bcd815e8111704c1.tar.gz
 Summary  : Cloud Integrated Advanced Orchestrator
 Group    : Development/Tools
 License  : Apache-2.0
@@ -66,7 +65,7 @@ done
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_prefix}/lib/systemd/system/
 mkdir -p %{buildroot}%{_prefix}/lib/tmpfiles.d
-install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/ciao.conf
+install -m 0644 data/systemd/ciao.conf       %{buildroot}/usr/lib/tmpfiles.d/ciao.conf
 install -D ./ciao-cli/ciao-cli               %{buildroot}%{_bindir}
 install -D ./ciao-controller/ciao-controller %{buildroot}%{_bindir}
 install -D ./ciao-launcher/ciao-launcher     %{buildroot}%{_bindir}
