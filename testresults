@@ -1,13 +1,5 @@
-perl: warning: Setting locale failed.
-perl: warning: Please check that your locale settings:
-	LANGUAGE = (unset),
-	LC_ALL = (unset),
-	LC_CTYPE = "en_MX.UTF-8",
-	LANG = "en_MX.UTF-8"
-    are supported and installed on your system.
-perl: warning: Falling back to the standard locale ("C").
-Total: 14
-Pass : 4
-Fail : 10
+Total: 20
+Pass : 5
+Fail : 15
 Skip : 0
 XFail: 0
