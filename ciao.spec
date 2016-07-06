@@ -12,6 +12,8 @@ Requires : ciao-config
 
 BuildRequires : go
 
+patch01: 0001-Add-Makefile.patch
+
 %description
 Ciao is the "Cloud Integrated Advanced Orchestrator".
 Its goal is to provide an easy to deploy, secure, scalable
@@ -47,32 +49,14 @@ tunnel creation on a compute node.
 
 %prep
 %setup -q
+%patch01 -p1
+
 
 %build
-export GOROOT="/usr/lib/golang"
-export GOPATH="%{buildroot}/usr/lib/golang:$(pwd)"
-mv vendor src
-mkdir -p src/github.com/01org
-ln -s ../../../ src/github.com/01org/ciao
-for dir in ciao-cli ciao-controller ciao-launcher ciao-scheduler networking/ciao-cnci-agent payloads ciao-cert;
-do
-    pushd $dir
-    go build -v -x
-    popd
-done
+make %{?_smp_mflags}
 
 %install
-mkdir -p %{buildroot}%{_bindir}
-mkdir -p %{buildroot}%{_prefix}/lib/systemd/system/
-mkdir -p %{buildroot}%{_prefix}/lib/tmpfiles.d
-install -m 0644 data/systemd/ciao.conf       %{buildroot}/usr/lib/tmpfiles.d/ciao.conf
-install -D ./ciao-cli/ciao-cli               %{buildroot}%{_bindir}
-install -D ./ciao-controller/ciao-controller %{buildroot}%{_bindir}
-install -D ./ciao-launcher/ciao-launcher     %{buildroot}%{_bindir}
-install -D ./ciao-scheduler/ciao-scheduler   %{buildroot}%{_bindir}
-install -D ./networking/ciao-cnci-agent/ciao-cnci-agent %{buildroot}%{_bindir}
-install -D ./ciao-cert/ciao-cert %{buildroot}%{_bindir}
-install -D ./networking/ciao-cnci-agent/scripts/ciao-cnci-agent.service %{buildroot}%{_prefix}/lib/systemd/system/
+%make_install
 
 
 %check
