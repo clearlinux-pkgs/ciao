@@ -1,6 +1,6 @@
 Name     : ciao
 Version  : 14
-Release  : 16
+Release  : 17
 URL      : https://github.com/01org/ciao
 Source0  : https://github.com/01org/ciao/archive/14.tar.gz
 Summary  : Cloud Integrated Advanced Orchestrator
