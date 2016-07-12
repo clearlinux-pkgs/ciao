@@ -7,9 +7,17 @@ if [[ -z "${VERSION}" ]]; then
     exit 1
 fi
 
-sed ciao.spec.in -e "s/\#\#VERSION\#\#/${VERSION}/g" > ciao.spec
+# get old version/release for commit message
+OLDREL=$(cat release)
+OLDVER=$(grep 'Version  : ' ciao.spec | sed -e "s/Version\ \ :\ //g")
+
+# get the release number from the `release` file and increment +1
+NEWREL=$(cat release | sed 's/$/+1/g' | bc)
+sed ciao.spec.in \
+    -e "s/\#\#RELEASE\#\#/${NEWREL}/g" \
+    -e "s/\#\#VERSION\#\#/${VERSION}/g" > ciao.spec
+echo ${NEWREL} > release
 make generateupstream && make || exit 1
 
 git add ciao.spec Makefile release upstream testresults
-git commit -s -m "Update to ${VERSION}"
-make bump
+git commit -s -m "Update from version ${OLDVER}-${OLDREL} to version ${VERSION}-${NEWREL}"
