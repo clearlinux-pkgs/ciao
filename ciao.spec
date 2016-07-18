@@ -1,6 +1,6 @@
 Name     : ciao
 Version  : 16
-Release  : 20
+Release  : 21
 URL      : https://github.com/01org/ciao
 Source0  : https://github.com/01org/ciao/archive/16.tar.gz
 Summary  : Cloud Integrated Advanced Orchestrator
@@ -67,9 +67,7 @@ export GOROOT="/usr/lib/golang"
 export GOPATH="%{buildroot}/usr/lib/golang:$(pwd)"
 for dir in ciao-cli ciao-controller ciao-launcher ciao-scheduler networking/ciao-cnci-agent payloads ciao-cert;
 do
-    pushd $dir
-    go test ./ || :
-    popd
+    go test -v github.com/01org/ciao/${dir} || :
 done
 
 %files
