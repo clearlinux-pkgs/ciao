@@ -1,8 +1,8 @@
 Name     : ciao
-Version  : 59
-Release  : 41
+Version  : 62
+Release  : 42
 URL      : https://github.com/01org/ciao
-Source0  : https://github.com/01org/ciao/archive/59.tar.gz
+Source0  : https://github.com/01org/ciao/archive/62.tar.gz
 Summary  : Cloud Integrated Advanced Orchestrator
 Group    : Development/Tools
 License  : Apache-2.0
