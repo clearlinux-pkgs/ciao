@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="$1"
+VERSION=`curl https://api.github.com/repos/01org/ciao/tags\?per_page=1 | awk -F '"' '/name/ {print $4}'`
 
 if [[ -z "${VERSION}" ]]; then
     echo "Please pass the new version first."
